@@ -1,0 +1,96 @@
+body {
+  margin: 0;
+  background: #111;
+  color: white;
+  font-family: monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#clock {
+  display: flex;
+  gap: 40px;
+  background: #000;
+  padding: 60px 80px;
+  border-radius: 20px;
+  box-shadow: 0 0 40px #222;
+  animation: floatGlow 5s ease-in-out infinite;
+}
+
+.digit {
+  position: relative;
+  width: 100px;
+  height: 160px;
+}
+
+.segment {
+  position: absolute;
+  background: #003;
+  opacity: 0.75;
+  transition: 0.3s ease;
+  border-radius: 5px;
+  box-shadow: 0 0 6px #000;
+}
+
+.segment.on {
+  background: #00c4b2;
+  opacity: 1;
+  box-shadow: 0 0 15px #00c4b2, 0 0 30px #00c4b2;
+}
+
+/* Segment layout */
+.segment.a { top: 0; left: 16px; width: 68px; height: 10px; }
+.segment.b { top: 10px; right: 0; width: 10px; height: 64px; }
+.segment.c { bottom: 10px; right: 0; width: 10px; height: 64px; }
+.segment.d { bottom: 0; left: 16px; width: 68px; height: 10px; }
+.segment.e { bottom: 10px; left: 0; width: 10px; height: 64px; }
+.segment.f { top: 10px; left: 0; width: 10px; height: 64px; }
+.segment.g { top: 77px; left: 16px; width: 68px; height: 10px; }
+
+.colon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  gap: 45px;
+}
+
+.dot {
+  width: 20px;
+  height: 20px;
+  background: #00c4b2;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00c4b2;
+  animation: blink 1s steps(1, start) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.2;
+    box-shadow: none;
+  }
+}
+
+@keyframes floatGlow {
+  0% {
+    transform: translateY(0px);
+    box-shadow: 0 0 40px #222;
+  }
+  50% {
+    transform: translateY(-10px);
+    box-shadow: 0 0 60px #00c4b2;
+  }
+  100% {
+    transform: translateY(0px);
+    box-shadow: 0 0 40px #222;
+  }
+}
+
+@media (max-width: 768px) {
+  #clock {
+    transform: scale(0.6);
+  }
+}
