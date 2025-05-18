@@ -1,14 +1,6 @@
-class ClockComponent {
-  constructor(parent, tag = "div", className = "") {
-    this.element = document.createElement(tag);
-    this.element.className = className;
-    parent.appendChild(this.element);
-  }
-}
-
 class SevenSegmentDigit {
   static segmentMap = {
-    0: "abcedf",
+    0: "abcdef",
     1: "bc",
     2: "abged",
     3: "abgcd",
@@ -21,13 +13,15 @@ class SevenSegmentDigit {
   };
 
   constructor(parent) {
-    this.component = new ClockComponent(parent, "div", "digit");
+    this.element = document.createElement("div");
+    this.element.className = "digit";
+    parent.appendChild(this.element);
 
     this.segments = {};
     for (const seg of ["a", "b", "c", "d", "e", "f", "g"]) {
       const el = document.createElement("div");
       el.className = `segment ${seg}`;
-      this.component.element.appendChild(el);
+      this.element.appendChild(el);
       this.segments[seg] = el;
     }
   }
@@ -42,24 +36,31 @@ class SevenSegmentDigit {
 
 class Colon {
   constructor(parent) {
-    this.component = new ClockComponent(parent, "div", "colon");
-    this.component.element.innerHTML = `
+    this.element = document.createElement("div");
+    this.element.className = "colon";
+    this.element.innerHTML = `
       <div class="dot"></div>
       <div class="dot"></div>
     `;
+    parent.appendChild(this.element);
   }
 }
 
 class Clock {
   constructor(rootId) {
     const container = document.getElementById(rootId);
-    this.digits = [];
+    if (!container) {
+      throw new Error(`Container with id "${rootId}" not found`);
+    }
 
+    this.digits = [];
+    
     for (let i = 0; i < 8; i++) {
       if (i === 2 || i === 5) {
-        new Colon(container);
+        const colon = new Colon(container);
       } else {
-        this.digits.push(new SevenSegmentDigit(container));
+        const digit = new SevenSegmentDigit(container);
+        this.digits.push(digit);
       }
     }
 
